@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import java.awt.Font;
@@ -25,6 +26,8 @@ public class MenuPrincipal extends JFrame {
 	private FrmProductos frmProducto;
 	private FrmFacturar frmFacturar;
 	private JDesktopPane desktopPane;
+	
+
 
 	/**
 	 * Launch the application.
@@ -89,6 +92,11 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnClientes.add(mntmNuevoCliente);
 		
+		JMenuItem mntmListaCliente = new JMenuItem("Lista Cliente");
+		mntmListaCliente.setFont(new Font("Goudy Old Style", Font.ITALIC, 10));
+		mntmListaCliente.setBackground(new Color(255, 128, 192));
+		mnClientes.add(mntmListaCliente);
+		
 		JMenu mnProductos = new JMenu("Productos");
 		mnProductos.setIcon(new ImageIcon("C:\\Users\\navar\\Downloads\\carrito-de-supermercado.png"));
 		mnProductos.setBackground(new Color(255, 128, 192));
@@ -132,6 +140,11 @@ public class MenuPrincipal extends JFrame {
 	
 	private void cerrarVentana() {
 		this.dispose();
+	}
+	private void abrirListaClientes() {
+	    ArrayList<Cliente> clientes = FrmClientes.getClientes();
+	    ListaCliente listaCliente = new ListaCliente(this, true, clientes, lblCedula, lblNombres, lblApellidos, lblTelefono, lblEmail, lblDireccion);
+	    listaCliente.setVisible(true);
 	}
 	
 	private void abrirFrmCliente() {

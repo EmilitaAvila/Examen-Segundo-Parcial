@@ -30,6 +30,7 @@ public class FrmClientes extends JInternalFrame {
 	private JTextField txtDireccion;
 	private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	private JButton btnGuardar;
+	 private JButton btnActualizar; // Nuevo botón de actualización
 	private JTable table;
 	private DefaultTableModel model;
 
@@ -121,10 +122,10 @@ public class FrmClientes extends JInternalFrame {
 				limpiarCampos();
 			}
 		});
-		btnNuevo.setBounds(45, 274, 90, 23);
+		btnNuevo.setBounds(10, 274, 90, 23);
 		getContentPane().add(btnNuevo);
 		
-		btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Agregar");
 		btnGuardar.setIcon(new ImageIcon("C:\\Users\\navar\\Downloads\\salvar.png"));
 		btnGuardar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 11));
 		btnGuardar.setBackground(new Color(183, 240, 210));
@@ -133,7 +134,7 @@ public class FrmClientes extends JInternalFrame {
 				crearCliente();
 			}
 		});
-		btnGuardar.setBounds(161, 274, 111, 23);
+		btnGuardar.setBounds(108, 274, 103, 23);
 		getContentPane().add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -145,7 +146,7 @@ public class FrmClientes extends JInternalFrame {
 				cerrarVentana();
 			}
 		});
-		btnCancelar.setBounds(293, 274, 111, 23);
+		btnCancelar.setBounds(319, 274, 111, 23);
 		getContentPane().add(btnCancelar);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -163,6 +164,12 @@ public class FrmClientes extends JInternalFrame {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 11));
+		btnEliminar.setBackground(new Color(183, 240, 210));
+		btnEliminar.setBounds(219, 274, 90, 23);
+		getContentPane().add(btnEliminar);
 		model = (DefaultTableModel) table.getModel();
 
 	}

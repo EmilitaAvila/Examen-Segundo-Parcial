@@ -132,47 +132,56 @@ public class ListaProductos extends JDialog {
 		this.indiceProducto = i;
 	}
 
-	private void enviarProducto(DefaultTableModel model, ArrayList<Productos> productos, JLabel lblSubtotal, JLabel lblIVA, JLabel lblTotal) {
-		if (this.indiceProducto == -1) {
-			JOptionPane.showMessageDialog(null, "Seleccione un producto", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if (!validarCantidad()) {
-			return;
-		}
-		Productos producto = new Productos(
-			FrmProductos.getProductos().get(indiceProducto).getIdProducto(),
-			FrmProductos.getProductos().get(indiceProducto).getDescripcion(),
-			FrmProductos.getProductos().get(indiceProducto).getPrecio(),
-			Integer.parseInt(this.camposTexto.get(indiceProducto).getText())
-		);
-		productos.add(producto);
+	private void enviarProducto(DefaultTableModel model, ArrayList<Productos> productos,
+	        JLabel lblSubtotal, JLabel lblIVA, JLabel lblTotal) {
+	    try {
+	        if (this.indiceProducto == -1) {
+	            JOptionPane.showMessageDialog(null, "Seleccione un producto", "Error", JOptionPane.ERROR_MESSAGE);
+	            return;
+	        }
+	        if (!validarCantidad()) {
+	            return;
+	        }
 
-		FrmProductos.getProductos().get(indiceProducto)
-			.setCantidad(FrmProductos.getProductos()
-				.get(indiceProducto)
-				.getCantidad() - producto
-				.getCantidad());
-		Object[] fila = new Object[5];
-		fila[0] = productos.get(productos.size() - 1).getIdProducto();
-		fila[1] = productos.get(productos.size() - 1).getDescripcion();
-		fila[2] = productos.get(productos.size() - 1).getPrecio();
-		fila[3] = productos.get(productos.size() - 1).getCantidad();
-		fila[4] = productos.get(productos.size() - 1).getTotal();
-		model.addRow(fila);
-		double total = 0;
-		for (Productos productoSum : productos) {
-			total += productoSum.getTotal();
-		}
-		Double iva = total * 0.12;
-		String ivaS = String.format("%.2f", iva);
-		iva = Double.parseDouble(ivaS);
-		lblSubtotal.setText("Subtotal: " + total);
-		lblIVA.setText("IVA: " + ivaS);
-		lblTotal.setText("Total: " + (total + iva));
+	        Productos producto = new Productos(
+	                FrmProductos.getProductos().get(indiceProducto).getIdProducto(),
+	                FrmProductos.getProductos().get(indiceProducto).getDescripcion(),
+	                FrmProductos.getProductos().get(indiceProducto).getPrecio(),
+	                Integer.parseInt(this.camposTexto.get(indiceProducto).getText())
+	        );
+	        productos.add(producto);
 
-		dispose();
+	        FrmProductos.getProductos().get(indiceProducto)
+	                .setCantidad(FrmProductos.getProductos()
+	                        .get(indiceProducto)
+	                        .getCantidad() - producto
+	                        .getCantidad());
+	        Object[] fila = new Object[5];
+	        fila[0] = productos.get(productos.size() - 1).getIdProducto();
+	        fila[1] = productos.get(productos.size() - 1).getDescripcion();
+	        fila[2] = productos.get(productos.size() - 1).getPrecio();
+	        fila[3] = productos.get(productos.size() - 1).getCantidad();
+	        fila[4] = productos.get(productos.size() - 1).getTotal();
+	        model.addRow(fila);
+
+	        double total = 0;
+	        for (Productos productoSum : productos) {
+	            total += productoSum.getTotal();
+	        }
+	        double iva = total * 0.12;
+	        String ivaS = String.format("%.2f", iva);
+	        iva = Double.parseDouble(ivaS);
+	        lblSubtotal.setText("Subtotal: " + String.format("%.2f", total));
+	        lblIVA.setText("IVA: " + ivaS);
+	        lblTotal.setText("Total: " + String.format("%.2f", total + iva));
+
+	        dispose();
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Print the exception details for debugging
+	        JOptionPane.showMessageDialog(null, "Error al enviar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
+
 
 	private boolean validarCantidad() {
 		try {
